@@ -13,6 +13,7 @@ import { Container, Row, Col } from 'reactstrap';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import MuiDialogContent from '@material-ui/core/DialogContent';
 
 const styles = {
 	card: {
@@ -34,29 +35,50 @@ const styles = {
 	}
 
 };
+const DialogContent = withStyles(theme => ({
+	root: {
+		margin: 0,
+		padding: theme.spacing.unit * 2,
+	},
+}))(MuiDialogContent);
+
 class TrailerVideos extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
 			open: false,
+			currentVideo:""
 		};
-		this.handleOpen = this.handleOpen.bind(this)
+		this.handleTrailerOpen = this.handleTrailerOpen.bind(this);
+		this.handleClose =  this.handleClose.bind(this);
 	}
 
-	handleOpen(){
-		alert('called')
+	handleTrailerOpen(e,video){
+		this.setState({
+			currentVideo: video
+		})
+		this.setState({
+			open: true
+		})
 	}	
+	handleClose() {
+		this.setState({
+			open: false
+		})
+	}
 
 	render(){
 		const { classes } = this.props;
+		var that = this;
 		const bull = <span className={classes.bullet}>•</span>;
 		var musicVideos = trailers.videos.map(function (video) {
 			let src = "https://www.youtube.com/embed/" + video.src;
+			let dialogTrailer = "https://www.youtube.com/embed/" + video.src+"?autoplay=1";
 			let date = video.date;
 			let views = video.views + " views " ;
 			console.log('videos',video);
 			return (
-				<Card onClick={() => this.handleOpen} className={classes.card} key={video.id} style={{display: 'inline-block',marginTop:'10px'}}>
+				<Card onClick={e=>that.handleTrailerOpen(e,dialogTrailer)} className={classes.card} key={video.id} style={{display: 'inline-block',marginTop:'10px'}}>
 				<CardActionArea>
 				<CardMedia 
 				/>
@@ -78,20 +100,25 @@ class TrailerVideos extends Component {
 		return(
 			<div>
 
-			<Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title">
-			<DialogTitle id="simple-dialog-title">Set backup account</DialogTitle>
-			<div>
-			<video controls width="400px" controls>
-			<source src="2.mp4" type="video/mp4"/>
-			<source src="mov_bbb.ogg" type="video/ogg"/>
-			Your browser does not support HTML5 video.
-			</video>
-			</div>
+			<Dialog
+			style={{width:'50% !important'}}
+			onClose={this.handleClose}
+			aria-labelledby="customized-dialog-title"
+			open={this.state.open}
+			>
+			<DialogTitle id="customized-dialog-title" onClose={this.handleClose}>
+			Modal title
+			</DialogTitle>
+			<DialogContent>
+			<iframe style={{width:'600px'}}src={this.state.currentVideo} frameborder="0" 
+			allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+			allowfullscreen></iframe>
+			</DialogContent>
 			</Dialog>
 
 			<Row style={{margin: '15px'}}>
 			<Col>
-			<i class="material-icons">music_video</i><span style={{position:'absolute',paddingLeft:'15px'}}>Trailers</span>
+			<img style={{color:'red'}}src="https://img.icons8.com/material/24/000000/youtube-play.png"></img><span style={{position:'absolute',paddingLeft:'15px'}}>Trailers</span>
 			</Col>
 			</Row>
 			<Row style={{

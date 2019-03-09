@@ -7,12 +7,10 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Container, Row, Col } from 'reactstrap';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 
@@ -43,15 +41,6 @@ const DialogContent = withStyles(theme => ({
 	},
 }))(MuiDialogContent);
 
-const DialogActions = withStyles(theme => ({
-	root: {
-		borderTop: `1px solid ${theme.palette.divider}`,
-		margin: 0,
-		padding: theme.spacing.unit,
-	},
-}))(MuiDialogActions);
-
-
 class LatestVideos extends Component {
 	constructor(props) {
 		super(props);
@@ -67,7 +56,6 @@ class LatestVideos extends Component {
 			open: false
 		})
 	}
-
 	handleOpen(e,video){
 		this.setState({
 			currentVideo: video
@@ -123,10 +111,7 @@ class LatestVideos extends Component {
 			allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
 			allowfullscreen></iframe>
 			</DialogContent>
-			<DialogActions>
-			</DialogActions>
 			</Dialog>
-
 			<Row style={{margin: '15px'}}>
 			<Col>
 			<i class="material-icons">music_video</i><span style={{position:'absolute',paddingLeft:'15px'}}>Latest Videos</span>
